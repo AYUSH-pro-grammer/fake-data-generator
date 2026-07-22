@@ -4,6 +4,8 @@ from typing import Any
 from datetime import date, datetime 
 from faker import Faker 
 
+from generate import generate_users, set_seed,generate_students, generate_employees, generate_products, generate_orders, generate_addresses
+
 
 fake = Faker()
 
@@ -110,5 +112,86 @@ def generate_custom_value(field_type: str, options: dict[str, Any] | None = None
     return fake.word()
 
 
+
+def generate_custom_data(
+        count: int, 
+        fields: list[dict[str, Any]],
+
+): 
+
+    fields = [
+        {
+            "name": "custumer_name",
+            "type": "Full Name",
+            "options": {}
+        },
+        {
+            "name": "age",
+            "type": "Integer",
+            "options": {
+                "minimum": 18,
+                "maximum": 65,
+            }
+        }
+    ]
+
+    records = []
+
+    for _ in range(count):
+
+        record={}
+
+
+        for field in fields:
+            field_name = field.get("name", "field")
+            field_type = field.get("type", "Text")
+            field_options = field.get("options", {})
+
+            record[field_name] = generate_custom_value(
+                field_type = field_type,
+                options = field_options,
+            )
+
+        records.append(record)
+
+
+    return records
+
+
+
+
+def generate_data(data_type: str, count: int, seed: int | None = None):
+
+    if count < 1:
+        raise ValueError("Count must be greater than 0")
+
+    if count > 10000:
+        raise ValueError("Count must be less than or equal to 10000")
+
+    set_seed(seed)    
+
+
+    generators = {
+        "Users": generate_users,
+        "Students": generate_students,
+        "Employees": generate_employees,
+        "Products": generate_products,
+
+        "Orders": generate_orders,
+        "Addresses": generate_addresses,
+
+
+
+    }
+
+
+
+    generator = generators.get(data_type)
+
+    if generator is None:
+        raise ValueError(f"Invalid data type: {data_type}")
+
+
+    return generator(count)
 
     
