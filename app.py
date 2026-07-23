@@ -11,12 +11,11 @@ from generate import (
 )
 
 
-
 st.set_page_config(
-        page_title="Fake Data Generator",
-            page_icon="🎲",
-                layout="wide",
-                )
+    page_title="Fake Data Generator",
+    page_icon="🎲",
+    layout="wide",
+)
 
 
 if "generated_data" not in st.session_state:
@@ -38,40 +37,32 @@ if "custom_fields" not in st.session_state:
     ]
 
 
-
 def dataframe_to_excel(dataframe: pd.DataFrame):
 
-    # convert pandas df to excel 
+    # convert pandas df to excel
 
     output = BytesIO()
 
     with pd.ExcelWriter(
-        output, 
-        engine = "openpyxl",
-
+        output,
+        engine="openpyxl",
     ) as writer:
         dataframe.to_excel(writer, index=False, sheet_name="Fake Data")
-
 
     output.seek(0)
     return output.getvalue()
 
 
-
-
 def reset_generated_data():
-    st.session_state.generated_data = [] 
+    st.session_state.generated_data = []
 
-     
 
 def add_custom_field() -> None:
     """
     Add a new field to the custom-field list.
     """
 
-    field_number = (
-        len(st.session_state.custom_fields) + 1
-    )
+    field_number = len(st.session_state.custom_fields) + 1
 
     new_field = {
         "name": f"field_{field_number}",
@@ -79,9 +70,7 @@ def add_custom_field() -> None:
         "options": {},
     }
 
-    st.session_state.custom_fields.append(
-        new_field
-    )
+    st.session_state.custom_fields.append(new_field)
 
 
 def remove_custom_field(
@@ -94,9 +83,7 @@ def remove_custom_field(
     if len(st.session_state.custom_fields) <= 1:
         return
 
-    st.session_state.custom_fields.pop(
-        field_index
-    )
+    st.session_state.custom_fields.pop(field_index)
 
 
 def clean_field_name(
@@ -107,20 +94,12 @@ def clean_field_name(
     Prepare a field name for dictionary and column use.
     """
 
-    cleaned_name = (
-        field_name
-        .strip()
-        .lower()
-        .replace(" ", "_")
-    )
+    cleaned_name = field_name.strip().lower().replace(" ", "_")
 
     if not cleaned_name:
-        cleaned_name = (
-            f"field_{field_index + 1}"
-        )
+        cleaned_name = f"field_{field_index + 1}"
 
     return cleaned_name
-
 
 
 def find_duplicate_names(
@@ -130,16 +109,9 @@ def find_duplicate_names(
     Return duplicated custom-field names.
     """
 
-    field_names = [
-        field["name"]
-        for field in fields
-    ]
+    field_names = [field["name"] for field in fields]
 
-    duplicate_names = {
-        name
-        for name in field_names
-        if field_names.count(name) > 1
-    }
+    duplicate_names = {name for name in field_names if field_names.count(name) > 1}
 
     return duplicate_names
 
@@ -170,21 +142,14 @@ def has_invalid_range(
                 return True
 
         if field_type == "Date":
-            start_date = options.get(
-                "start_date"
-            )
+            start_date = options.get("start_date")
 
-            end_date = options.get(
-                "end_date"
-            )
+            end_date = options.get("end_date")
 
             if start_date > end_date:
                 return True
 
     return False
-
-
-
 
 
 # Main header
@@ -199,7 +164,6 @@ st.write(
 )
 
 st.divider()
-
 
 
 # Sidebar
@@ -226,10 +190,7 @@ with st.sidebar:
 
     use_seed = st.checkbox(
         label="Use a fixed seed",
-        help=(
-            "Using the same seed generates "
-            "the same random data again."
-        ),
+        help=("Using the same seed generates the same random data again."),
     )
 
     seed = None
@@ -253,7 +214,6 @@ with st.sidebar:
     if clear_button:
         reset_generated_data()
         st.rerun()
-
 
 
 # Available custom field types
@@ -287,7 +247,6 @@ FIELD_TYPES = [
 ]
 
 
-
 # Available templates
 
 
@@ -301,20 +260,7 @@ TEMPLATE_TYPES = [
 ]
 
 
-
-
-
-
-# next part 
-
-
-
-
-
-
-
-
-
+# next part
 
 
 # Template descriptions
@@ -352,7 +298,6 @@ TEMPLATE_DESCRIPTIONS = {
 }
 
 
-
 # Template generator
 
 
@@ -364,10 +309,7 @@ if generator_mode == "Templates":
         options=TEMPLATE_TYPES,
     )
 
-    st.info(
-        TEMPLATE_DESCRIPTIONS[template_type]
-    )
-
+    st.info(TEMPLATE_DESCRIPTIONS[template_type])
 
     generate_template_button = st.button(
         label="Generate Data",
@@ -380,30 +322,17 @@ if generator_mode == "Templates":
             generated_records = generate_data(
                 data_type=template_type,
                 count=int(record_count),
-                seed=(
-                    int(seed)
-                    if seed is not None
-                    else None
-                ),
+                seed=(int(seed) if seed is not None else None),
             )
 
-
-            st.session_state.generated_data = (
-                generated_records
-            )
+            st.session_state.generated_data = generated_records
 
             st.success(
-                f"Generated {len(generated_records)} "
-                f"{template_type.lower()} records."
+                f"Generated {len(generated_records)} {template_type.lower()} records."
             )
 
         except Exception as error:
-            st.error(
-                f"Could not generate data: {error}"
-            )
-
-
-    
+            st.error(f"Could not generate data: {error}")
 
 
 # Custom field generator
@@ -419,44 +348,25 @@ else:
 
     updated_fields = []
 
-
-    for field_index, saved_field in enumerate(
-        st.session_state.custom_fields
-    ):
+    for field_index, saved_field in enumerate(st.session_state.custom_fields):
         with st.container(border=True):
-            heading_column, remove_column = st.columns(
-                [8, 1]
-            )
+            heading_column, remove_column = st.columns([8, 1])
 
             with heading_column:
-                st.markdown(
-                    f"#### Field {field_index + 1}"
-                )
-
+                st.markdown(f"#### Field {field_index + 1}")
 
             with remove_column:
                 remove_button = st.button(
                     label="X",
                     key=f"remove_field_{field_index}",
                     help="Remove this field",
-                    disabled=(
-                        len(
-                            st.session_state.custom_fields
-                        )
-                        <= 1
-                    ),
+                    disabled=(len(st.session_state.custom_fields) <= 1),
                 )
 
                 if remove_button:
-                    remove_custom_field(
-                        field_index
-                    )
+                    remove_custom_field(field_index)
 
                     st.rerun()
-
-
-                    
-
 
             name_column, type_column = st.columns(2)
 
@@ -470,7 +380,6 @@ else:
                     key=f"field_name_{field_index}",
                 )
 
-
             with type_column:
                 saved_type = saved_field.get(
                     "type",
@@ -478,9 +387,7 @@ else:
                 )
 
                 if saved_type in FIELD_TYPES:
-                    selected_type_index = (
-                        FIELD_TYPES.index(saved_type)
-                    )
+                    selected_type_index = FIELD_TYPES.index(saved_type)
                 else:
                     selected_type_index = 0
 
@@ -493,10 +400,7 @@ else:
 
             field_options = {}
 
-
-            # --------------------------------------
             # Text settings
-            # --------------------------------------
 
             if field_type == "Text":
                 current_options = saved_field.get(
@@ -518,14 +422,9 @@ else:
                     key=f"text_length_{field_index}",
                 )
 
-                field_options["max_length"] = int(
-                    word_count
-                )
+                field_options["max_length"] = int(word_count)
 
-
-            # --------------------------------------
-            # Integer settings
-            # --------------------------------------
+                # Integer settings
 
             elif field_type == "Integer":
                 current_options = saved_field.get(
@@ -533,9 +432,7 @@ else:
                     {},
                 )
 
-                minimum_column, maximum_column = (
-                    st.columns(2)
-                )
+                minimum_column, maximum_column = st.columns(2)
 
                 with minimum_column:
                     minimum = st.number_input(
@@ -547,12 +444,8 @@ else:
                             )
                         ),
                         step=1,
-                        key=(
-                            f"integer_minimum_"
-                            f"{field_index}"
-                        ),
+                        key=(f"integer_minimum_{field_index}"),
                     )
-
 
                 with maximum_column:
                     maximum = st.number_input(
@@ -564,24 +457,14 @@ else:
                             )
                         ),
                         step=1,
-                        key=(
-                            f"integer_maximum_"
-                            f"{field_index}"
-                        ),
+                        key=(f"integer_maximum_{field_index}"),
                     )
 
-                field_options["minimum"] = int(
-                    minimum
-                )
+                field_options["minimum"] = int(minimum)
 
-                field_options["maximum"] = int(
-                    maximum
-                )
+                field_options["maximum"] = int(maximum)
 
-
-            # --------------------------------------
-            # Float settings
-            # --------------------------------------
+                # Float settings
 
             elif field_type == "Float":
                 current_options = saved_field.get(
@@ -589,9 +472,7 @@ else:
                     {},
                 )
 
-                minimum_column, maximum_column = (
-                    st.columns(2)
-                )
+                minimum_column, maximum_column = st.columns(2)
 
                 with minimum_column:
                     minimum = st.number_input(
@@ -602,12 +483,8 @@ else:
                                 0.0,
                             )
                         ),
-                        key=(
-                            f"float_minimum_"
-                            f"{field_index}"
-                        ),
+                        key=(f"float_minimum_{field_index}"),
                     )
-
 
                 with maximum_column:
                     maximum = st.number_input(
@@ -618,10 +495,7 @@ else:
                                 100.0,
                             )
                         ),
-                        key=(
-                            f"float_maximum_"
-                            f"{field_index}"
-                        ),
+                        key=(f"float_maximum_{field_index}"),
                     )
 
                 decimal_places = st.slider(
@@ -634,30 +508,16 @@ else:
                             2,
                         )
                     ),
-                    key=(
-                        f"float_decimal_places_"
-                        f"{field_index}"
-                    ),
+                    key=(f"float_decimal_places_{field_index}"),
                 )
 
-                field_options["minimum"] = float(
-                    minimum
-                )
+                field_options["minimum"] = float(minimum)
 
-                field_options["maximum"] = float(
-                    maximum
-                )
+                field_options["maximum"] = float(maximum)
 
-                field_options["decimal_places"] = int(
-                    decimal_places
-                )
+                field_options["decimal_places"] = int(decimal_places)
 
-
-
-
-            # --------------------------------------
-            # Date settings
-            # --------------------------------------
+                # Date settings
 
             elif field_type == "Date":
                 current_options = saved_field.get(
@@ -675,16 +535,11 @@ else:
                     pd.Timestamp.today().date(),
                 )
 
-
                 if isinstance(default_start_date, str):
-                    default_start_date = pd.to_datetime(
-                        default_start_date
-                    ).date()
+                    default_start_date = pd.to_datetime(default_start_date).date()
 
                 if isinstance(default_end_date, str):
-                    default_end_date = pd.to_datetime(
-                        default_end_date
-                    ).date()
+                    default_end_date = pd.to_datetime(default_end_date).date()
 
                 start_column, end_column = st.columns(2)
 
@@ -705,10 +560,7 @@ else:
                 field_options["start_date"] = start_date
                 field_options["end_date"] = end_date
 
-
-            # --------------------------------------
-            # Random choice settings
-            # --------------------------------------
+                # Random choice settings
 
             elif field_type == "Random Choice":
                 current_options = saved_field.get(
@@ -728,15 +580,10 @@ else:
                 choices_text = st.text_area(
                     label="Choices",
                     value=", ".join(saved_choices),
-                    placeholder=(
-                        "Pending, Processing, Completed"
-                    ),
-                    help=(
-                        "Separate each choice using a comma."
-                    ),
+                    placeholder=("Pending, Processing, Completed"),
+                    help=("Separate each choice using a comma."),
                     key=f"random_choices_{field_index}",
                 )
-
 
                 choices = [
                     choice.strip()
@@ -752,10 +599,7 @@ else:
 
                 field_options["choices"] = choices
 
-
-            # --------------------------------------
-            # Save the configured field
-            # --------------------------------------
+                # Save the configured field
 
             cleaned_field_name = clean_field_name(
                 field_name=field_name,
@@ -775,13 +619,7 @@ else:
 
     st.session_state.custom_fields = updated_fields
 
-
-
-
-
-    
     # Custom field action buttons
-    
 
     add_column, generate_column = st.columns(2)
 
@@ -802,19 +640,12 @@ else:
             use_container_width=True,
         )
 
-
-    
     # Generate custom records
-    
 
     if generate_custom_button:
-        duplicate_names = find_duplicate_names(
-            st.session_state.custom_fields
-        )
+        duplicate_names = find_duplicate_names(st.session_state.custom_fields)
 
-        invalid_range = has_invalid_range(
-            st.session_state.custom_fields
-        )
+        invalid_range = has_invalid_range(st.session_state.custom_fields)
 
         empty_random_choices = []
 
@@ -829,15 +660,10 @@ else:
                 )
 
                 if not field_choices:
-                    empty_random_choices.append(
-                        field.get("name", "field")
-                    )
-
+                    empty_random_choices.append(field.get("name", "field"))
 
         if duplicate_names:
-            duplicate_text = ", ".join(
-                sorted(duplicate_names)
-            )
+            duplicate_text = ", ".join(sorted(duplicate_names))
 
             st.error(
                 "Every column must have a unique name. "
@@ -853,23 +679,16 @@ else:
             )
 
         elif empty_random_choices:
-            invalid_fields = ", ".join(
-                empty_random_choices
-            )
+            invalid_fields = ", ".join(empty_random_choices)
 
             st.error(
                 "Random Choice fields must contain at "
                 f"least one choice: {invalid_fields}"
             )
 
-
         else:
             try:
-                selected_seed = (
-                    int(seed)
-                    if seed is not None
-                    else None
-                )
+                selected_seed = int(seed) if seed is not None else None
 
                 set_seed(selected_seed)
 
@@ -878,27 +697,12 @@ else:
                     fields=st.session_state.custom_fields,
                 )
 
-                st.session_state.generated_data = (
-                    generated_records
-                )
+                st.session_state.generated_data = generated_records
 
-                st.success(
-                    f"Generated {len(generated_records)} "
-                    "custom records."
-                )
+                st.success(f"Generated {len(generated_records)} custom records.")
 
             except Exception as error:
-                st.error(
-                    "Could not generate custom data: "
-                    f"{error}"
-                )
-
-
-
-
-
-
-
+                st.error(f"Could not generate custom data: {error}")
 
 
 # Generated data preview
@@ -909,10 +713,7 @@ if st.session_state.generated_data:
 
     st.subheader("Generated Data")
 
-    dataframe = pd.DataFrame(
-        st.session_state.generated_data
-    )
-
+    dataframe = pd.DataFrame(st.session_state.generated_data)
 
     record_metric, column_metric = st.columns(2)
 
@@ -928,7 +729,6 @@ if st.session_state.generated_data:
             value=len(dataframe.columns),
         )
 
-
     st.dataframe(
         dataframe,
         use_container_width=True,
@@ -936,14 +736,9 @@ if st.session_state.generated_data:
         height=450,
     )
 
-
-    
     # Download file preparation
-    
 
-    csv_data = dataframe.to_csv(
-        index=False
-    ).encode("utf-8")
+    csv_data = dataframe.to_csv(index=False).encode("utf-8")
 
     json_data = json.dumps(
         st.session_state.generated_data,
@@ -951,31 +746,19 @@ if st.session_state.generated_data:
         default=str,
     )
 
-
     try:
-        excel_data = dataframe_to_excel(
-            dataframe
-        )
+        excel_data = dataframe_to_excel(dataframe)
 
     except Exception as error:
         excel_data = None
 
-        st.warning(
-            "Excel download could not be prepared. "
-            f"Error: {error}"
-        )
-
+        st.warning(f"Excel download could not be prepared. Error: {error}")
 
     st.subheader("Download Dataset")
 
-    csv_column, json_column, excel_column = (
-        st.columns(3)
-    )
+    csv_column, json_column, excel_column = st.columns(3)
 
-
-    
     # CSV download
-    
 
     with csv_column:
         st.download_button(
@@ -986,10 +769,7 @@ if st.session_state.generated_data:
             use_container_width=True,
         )
 
-
-    
     # JSON download
-    
 
     with json_column:
         st.download_button(
@@ -1000,24 +780,14 @@ if st.session_state.generated_data:
             use_container_width=True,
         )
 
-
-    
     # Excel download
-    
 
     with excel_column:
         st.download_button(
             label="Download Excel",
-            data=(
-                excel_data
-                if excel_data is not None
-                else b""
-            ),
+            data=(excel_data if excel_data is not None else b""),
             file_name="fake_data.xlsx",
-            mime=(
-                "application/vnd.openxmlformats-"
-                "officedocument.spreadsheetml.sheet"
-            ),
+            mime=("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"),
             use_container_width=True,
             disabled=excel_data is None,
         )
