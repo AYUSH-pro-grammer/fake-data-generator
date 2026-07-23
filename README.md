@@ -6,55 +6,68 @@ A Streamlit application for generating realistic sample datasets without manuall
 
 ## Screenshots
 
-![Template generation mode](assets/template-mode.png)
 
-![Custom schema builder](assets/custom-fields-mode.png)
+<img width="1511" height="858" alt="Screenshot 2026-07-23 at 5 54 41 PM" src="https://github.com/user-attachments/assets/49a65b0f-2e07-4aab-91f7-56c1a0001bcd" />
 
-![Generated data preview and downloads](assets/data-preview.png)
+<img width="1512" height="861" alt="Screenshot 2026-07-23 at 5 55 00 PM" src="https://github.com/user-attachments/assets/b2e530a7-7a73-468c-a91b-73ed58c200d3" />
+
+
+<img width="1196" height="717" alt="Screenshot 2026-07-23 at 5 55 24 PM" src="https://github.com/user-attachments/assets/b80c1b14-9cae-4841-9359-d4657e62b923" />
+
+
+<img width="1512" height="859" alt="Screenshot 2026-07-23 at 5 56 00 PM" src="https://github.com/user-attachments/assets/7d8d592d-d9af-4ec1-8205-b536d72977de" />
+<img width="1512" height="861" alt="Screenshot 2026-07-23 at 5 55 49 PM" src="https://github.com/user-attachments/assets/ed375182-97ef-4f4a-b394-33290922bbd7" />
+
+
+
+<img width="1512" height="545" alt="Screenshot 2026-07-23 at 5 56 36 PM" src="https://github.com/user-attachments/assets/426f30c2-4fde-4eac-b434-753b4ec342ed" />
+
 
 ## Overview
 
-Fake Data Generator is a browser-based tool that creates structured sample data for testing, learning, prototypes, forms, tables, APIs, and database projects.
+Fake Data Generator is a browser-based application which generates structured sample data for testing, educational purposes, prototyping, forms, tables, APIs and database applications.
 
-The app provides two ways to create a dataset. A user can select one of the ready-made templates or build a custom schema by choosing the name and type of every column. The generated records can be previewed inside the app and downloaded as CSV, JSON, or Excel files.
+The application gives a choice between using pre-made templates and creating custom schema by choosing name and type of each column. Generated data could be previewed inside the application and exported into CSV, JSON and Excel formats.
 
-All generated values are synthetic and are intended only for development and testing.
+All the generated data are fake and are intended for use only in development and testing.
 
-## Why I Built It
+## Reasons To Build It
 
-While working on projects, I often needed sample records to test tables, forms, backend models, and data exports. Writing names, emails, addresses, products, and order information manually was repetitive and made it harder to test with larger datasets.
+In the course of projects I needed sample data in order to test my tables, forms, backend models and data exports. Entering names, emails, addresses, products and orders manually was a tedious and time-consuming process.
 
-I wanted to build something practical while learning Streamlit: a single tool that could generate ready-made datasets quickly but still give the user control when a fixed template was not enough. The custom field builder became the most interesting part because it required dynamic inputs, validation, session state, and different settings for different data types.
+So I decided to develop a useful tool for myself in the course of learning Streamlit which would generate sample datasets fast but at the same time provide a possibility to customize them if needed. Custom fields builder became the most challenging part of development since it required usage of dynamic inputs, validation, session state and various settings depending on data type.
+
 
 ## Features
 
-* Generate between 1 and 10,000 records at a time
-* Use ready-made templates for common datasets
-* Build a custom dataset with user-defined column names and value types
-* Add or remove custom fields dynamically
-* Configure ranges for numeric and date fields
-* Create repeatable datasets with a fixed random seed
-* Detect duplicate custom column names
-* Validate invalid number and date ranges before generation
-* Preview generated records in a table
-* Download generated data as CSV, JSON, or Excel
-* Clear the current generated dataset without restarting the app
-* Use the application directly in a browser without creating an account
+* Create from 1 up to 10,000 records at once
+* Utilize pre-built templates of typical datasets
+* Make a custom dataset with a name of your columns and data types
+* Modify the amount of custom fields
+* Set up value ranges for numeric and date fields
+* Create repeatable dataset using a certain random seed
+* Spot duplicates of custom columns
+* Verify the correctness of number and date ranges before creation
+* Preview created records in the table format
+* Export created data in CSV, JSON and Excel formats
+* Delete the current dataset without closing the application
+* Use the application without registration right in your web-browser
+  
 
 ## Available Templates
 
-| Template  | Generated information                                                                                                          |
-| --------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| Users     | Names, usernames, emails, phone numbers, dates of birth, addresses, locations, account dates, and active status                |
-| Students  | Student IDs, names, courses, academic year, semester, marks, attendance, college, city, and admission date                     |
-| Employees | Employee IDs, names, departments, job titles, companies, salaries, employment type, work location, joining date, and status    |
-| Products  | Product IDs, names, categories, brands, descriptions, prices, discounts, stock, ratings, review counts, SKUs, and availability |
-| Orders    | Order IDs, customers, products, quantities, prices, totals, payment methods, order status, shipping addresses, and dates       |
-| Addresses | IDs, names, street addresses, cities, states, countries, postal codes, latitude, and longitude                                 |
+| Template  | Information generated                                                                                 |
+| --------- | --------------------------------------------------------------------------------------------------- |
+| Users     | Names, usernames, emails, phone numbers, DOB, address, location, account created on, and status            |
+| Students  | ID, name, course, academic year, semester, marks, attendance, college, city, and admission date           |
+| Employees | ID, name, department, designation, company, salary, employment type, location, joining date, and status   |
+| Products  | ID, name, category, brand, description, price, discount, stock, rating, number of reviews, SKU, and status|
+| Orders    | ID, customer, product(s), quantity, price, total, payment method, status, shipping address, and date     |
+| Addresses | ID, name, street address, city, state, country, pincode, latitude, and longitude                       |
 
-## Custom Field Types
+## Custom Field Data Types
 
-The custom schema builder supports the following value types:
+The schema builder allows for the following data types to be created:
 
 * Full Name
 * First Name
@@ -66,101 +79,111 @@ The custom schema builder supports the following value types:
 * City
 * State
 * Country
-* Postal Code
+* Zipcode
 * Company
-* Job Title
+* Position
 * Text
 * Integer
 * Float
 * Boolean
 * Date
-* Date and Time
+* Date & Time
 * URL
-* IPv4 Address
+* IPv4
 * Color
 * Credit Card
 * Random Choice
 
-Some types provide additional controls. For example, numeric fields can use minimum and maximum values, float fields can use a selected number of decimal places, date fields can use a date range, and random-choice fields can use a custom list of choices.
+Certain data types have extra options. For instance, integer types can set minimum and maximum values, floating point values can set number of digits after dot, dates can have a range, and random choice can have custom list of choices.
 
-## How to Use the App
 
-### Using a Template
+## How to use the app ### Use a template
 
-1. Open the [live application](https://ayush-pro-grammer-fake-data-generator-app-t5flun.streamlit.app/).
-2. Select `Templates` from the generation mode in the sidebar.
-3. Enter the number of records to generate.
-4. Optionally enable `Use a fixed seed` and enter a seed value.
-5. Select a dataset template.
-6. Click `Generate Data`.
-7. Review the generated records in the preview table.
-8. Download the dataset as CSV, JSON, or Excel.
+1. Go to [live app](https://ayush-pro-grammer-fake-data-generator-app-t5flun.streamlit.app/).
+2. Choose `Templates` as the generation mode in the sidebar.
+3. Specify how many records you want to generate:
+4. (Optional) Select Use a fixed seed and type a seed value.
+5. Choose a dataset template.
+6. Click on `Generate Data`.
+7. Examine the generated records in the preview table.
+8. Download the data set in CSV, JSON or Excel format.
 
-### Building a Custom Dataset
+#### Building Your Own Dataset
 
-1. Select `Custom Fields` from the generation mode.
-2. Enter the number of records to generate.
-3. Give each field a column name.
-4. Select the value type for each field.
-5. Configure any options shown for that type.
-6. Use the add-field button to create more columns.
-7. Remove fields that are not required.
-8. Generate the dataset and check the preview.
-9. Download it in the required format.
+1. Choose `Custom Fields` as generation mode.
+2. Indicate how many records you wish to create.
+3. Name each field with a column name.
+4. Select value type for each field.
+5. Choose any options displayed for that type.
+6. Click on the add-field button to create more columns.
+7. Remove any unnecessary fields.
+8. Create the data set and preview it.
+9. Download it in the needed format.
 
-Using the same fixed seed with the same configuration produces the same random dataset again. This is useful when a test needs predictable input.
+Using the same fixed seed and same configuration you will generate the same random dataset again. This is useful when you want a test to have predictable inputs.
 
-## How It Works
+How It works
 
-The project is divided into two main Python files.
+The project can be decomposed into two separate Python file.
 
-### `app.py`
+# app.py
 
-This file contains the Streamlit interface and application flow. It handles:
+TheStreamlit interface andapplication logicliveshere. This filewill:
 
-* Page layout and sidebar controls
-* Template and custom-field modes
-* Dynamic custom fields
-* Streamlit session state
-* Input validation
-* Data preview
-* CSV, JSON, and Excel exports
-* Clearing generated data
+* Setup the page layout and sidebar options.
+* Set up the twomodes,templates and custom-fields.
+*dynamicallygenerate thecustom-fields.
+* Manage the session statewith Streamlit.
+*validateuserinputs.
+* Preview the data.
+* Export to CSV, JSON, and Excel formats.
+* Clear generated data.
 
-### `generate.py`
 
-This file contains the data-generation logic. It handles:
+# generate.py
 
-* Faker-based values such as names, emails, companies, jobs, and addresses
-* Random numeric and choice-based values
-* Template-specific record generation
-* Custom field generation
-* Seeded output using Faker and Python's `random` module
-* Record-count validation
+Data generation logic. Handles:
 
-After records are generated, `app.py` converts them into a Pandas DataFrame for previewing and exporting. Excel files are created in memory with `openpyxl`, so the app does not need to save temporary export files to the repository.
+* Faker-generated values such as names, emails, companies, jobs, addresses
+* random integer and choice values
 
-The project does not use a database. Generated records are kept in the current Streamlit session until they are cleared or the session ends.
+* template-specific record generation
 
-## Tech Stack
+* custom fields
 
-| Technology | Purpose                             |
-| ---------- | ----------------------------------- |
-| Python     | Main programming language           |
-| Streamlit  | Web interface and session state     |
-| Faker      | Realistic synthetic values          |
-| Pandas     | Tabular preview and data conversion |
-| OpenPyXL   | Excel file generation               |
-| JSON       | JSON serialization and download     |
+* seeded output using both Faker and Python's random module
+
+* record-count check
+
+Generated records are passed to app.py for conversion into a Pandas DataFrame where users can preview and download them. Exported files are generated in memory using openpyxl (no temporary export files need to be saved to the repository).
+
+There is no database underlying the project. Records are held in the session until either they are cleared or the Streamlit session expires.
+
+Tech Stack
+
+| Tech    | Role                    |
+
+| ------- | ----------------------- |
+
+| Python  | All-around              |
+
+| Streamlit | Web Interface/State     |
+
+| Faker   | Realistic Synthetic Data |
+
+| Pandas  | Preview / Data          |
+
+| OpenPyXL | Excel Export            |
+
+| JSON    | JSON Download           |
+
+
+
 
 ## Project Structure
 
 ```text
 fake-data-generator/
-├── assets/
-│   ├── template-mode.png
-│   ├── custom-fields-mode.png
-│   └── data-preview.png
 ├── app.py
 ├── generate.py
 ├── requirements.txt
@@ -229,50 +252,14 @@ openpyxl
 
 They are listed in `requirements.txt` so the application can be reproduced locally and deployed on Streamlit Community Cloud.
 
-## Challenges and What I Learned
+Struggles and learnings. The first struggle was how to make schema builder dynamic, you would expect that since each field has its own type and different settings then all that information would persist whenever Streamlit would rerun the application. Here, I usedsession state to hold on the generated dataframe and the custom-field's configuration so that they survive reruns while you edit the form. 
 
-The main challenge was making the custom schema builder dynamic. Every field can have a different type and different settings, but those values still need to survive Streamlit reruns. I used session state to keep the generated dataset and the custom-field configuration available while the user edits the form.
+Another thing that i have learnt is that generators need validation, and not random values and i got issues in the beginning when trying to generate data using reversed ranges of the date and numeric types,or with duplicated column names or an unparsable format of a datetime. 
 
-I also learned that a generator needs validation, not just random values. Duplicate column names, reversed numeric ranges, and invalid date ranges can create confusing output, so I added checks before generation.
+So in this solution I included a schema validation phase before actually sending for the generator's work. Another interesting implementation was the Multiple download formats support because I was accustomed to deal with text files so CSV & json had not come up too much struggle but on the other hand Excel download involves writing to an in-memory python file before providing this to download button. Finally the Streamlit project Deployment was very useful, because it helped me to realize the importance of providing in an adequate list of python dependencies in therequirements.txt and understand why is it necessary to run a Streamlit projects from its main script by simply usingstreamlit run app.py and it is impossible to run it like any other python file. ## How I Used Ai: i leveragedChatGPT as my support system throughout the different phases of this project (plan,debug,review and enhance). 
 
-Another useful part was implementing multiple download formats. CSV and JSON are text-based, but Excel generation required writing the DataFrame to an in-memory file before giving it to Streamlit's download button.
+I took his response as a start and verified the output, handled errors, managed deployments, validated downloads, ran test case and managed the different moving parts of the application, also i can understand why these implementation have been put into a specific place.
 
-Finally, deploying the app helped me understand how Python dependencies must be listed in `requirements.txt` and why a Streamlit project must be started with `streamlit run app.py` instead of running the file as a normal Python script.
-
-## AI Assistance
-
-I used ChatGPT as a support tool while planning, debugging, reviewing, and improving parts of this project. I did not treat its suggestions as finished work. I ran the application, fixed errors, tested the generator and downloads, handled deployment issues, and worked through how the different parts fit together.
-
-I understand the code and can explain the template generators, custom schema flow, session state, validation, seeded generation, and export logic.
-
-## Current Limitations
-
-* Generated records are independent; the app does not currently create relationships between multiple tables.
-* The generator uses one default Faker locale.
-* Custom schemas cannot yet be saved and loaded later.
-* The maximum generation size is 10,000 records per run.
-* Generated values are for testing and must not be treated as verified personal, financial, or production data.
-
-## Future Improvements
-
-* Add locale selection for country-specific names, addresses, and phone numbers
-* Allow users to save and import custom schemas
-* Generate related datasets using shared IDs
-* Add SQL export
-* Add more ready-made templates
-* Add optional uniqueness rules for selected columns
-* Show basic statistics about the generated dataset
-
-## Credits
-
-* [Streamlit](https://streamlit.io/) for the web application framework
-* [Faker](https://faker.readthedocs.io/) for synthetic data generation
-* [Pandas](https://pandas.pydata.org/) for tabular data handling
-* [OpenPyXL](https://openpyxl.readthedocs.io/) for Excel export support
-
-## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for details.
 
 ## Author
 
