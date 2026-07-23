@@ -394,7 +394,7 @@ def generate_custom_value(field_type: str, options: dict[str, Any] | None = None
         return fake.credit_card_number()
 
     if field_type == "Random Choice":
-        choices = optoins.get("choices", ["Option 1", "Option 2", "Option 3"])
+        choices = options.get("choices", ["Option 1", "Option 2", "Option 3"])
 
         return random.choice(choices)
 
